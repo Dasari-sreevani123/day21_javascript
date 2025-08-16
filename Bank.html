@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Application</title>
+</head>
+<body>
+    <h2>Bank Application</h2>
+
+    <label for="Account ID">Account ID:</label>
+    <input type="text" id="accId" placeholder="Enter your Account ID"><br><br>
+
+    <label for="Account Name">Account Name:</label>
+    <input type="text" id="accName" placeholder="Enter your Account Name"><br><br>
+
+    <label for="Initial Amount">Initial Amount:</label>
+    <input type="number" id="balance" placeholder="Enter your Initial Amount"><br><br>
+
+    <button onclick="deposit()">Deposit</button>
+    <button onclick="withdraw()">Withdraw</button>
+    <button onclick="checkBalance()">Check Balance</button>
+    <button onclick="accountDetails()">Account Details</button>
+
+    <p id="output"></p>
+
+    <script>
+       
+        let account = {
+            id: '',
+            name: '',
+            balance: 0
+        };
+
+        const initializeAccount = () => {
+            account.id = document.getElementById("accId").value;
+            account.name = document.getElementById("accName").value;
+            account.balance = parseFloat(document.getElementById("balance").value);
+        };
+        const deposit = () => {
+            initializeAccount();
+            let amount = parseFloat(prompt("Enter deposit amount:"));
+            if (!isNaN(amount) && amount > 0) {
+                account.balance += amount;
+                document.getElementById("output").innerHTML = `Deposited ₹${amount}. New balance: ₹${account.balance}`;
+            } else {
+                document.getElementById("output").innerHTML = "Invalid deposit amount.";
+            }
+        };
+        const withdraw = () => {
+            initializeAccount();
+            let amount = parseFloat(prompt("Enter withdraw amount:"));
+            if (!isNaN(amount) && amount > 0) {
+                if (amount <= account.balance) {
+                    account.balance -= amount;
+                    document.getElementById("output").innerHTML = `Withdrawn ₹${amount}. Remaining balance: ₹${account.balance}`;
+                } else {
+                    document.getElementById("output").innerHTML = "Insufficient balance.";
+                }
+            } else {
+                document.getElementById("output").innerHTML = "Invalid withdraw amount.";
+            }
+        };
+        const checkBalance = () => {
+            initializeAccount();
+            document.getElementById("output").innerHTML = `Current balance: ₹${account.balance}`;
+        };
+        const accountDetails = () => {
+            initializeAccount();
+            document.getElementById("output").innerHTML = `<strong>Account Details:</strong><br>
+                ID: ${account.id}<br>
+                Name: ${account.name}<br>
+                Balance: ₹${account.balance}`;
+
+        };
+    </script>
+</body>
+</html>
